@@ -4,16 +4,21 @@ import { styled } from 'styled-components';
 type TButtonProps = {
 	children: React.ReactNode;
 	callback: () => void;
+	error: boolean;
 };
 
-export const Button = ({ callback, children }: TButtonProps) => {
+export const Button = ({ error, callback, children }: TButtonProps) => {
 	const onClick = () => {
 		callback();
 	};
-	return <StyledButton onClick={onClick}>{children}</StyledButton>;
+	return (
+		<StyledButton disabled={error} onClick={onClick}>
+			{children}
+		</StyledButton>
+	);
 };
 
-export const StyledButton = styled.button`
+export const StyledButton = styled.button<TStyledButtonProps>`
 	font-size: 30px;
 	padding: 10px 20px;
 	border-radius: 10px;

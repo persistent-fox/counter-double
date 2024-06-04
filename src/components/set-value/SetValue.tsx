@@ -1,15 +1,18 @@
 import { styled } from 'styled-components';
 import { Button } from '../button/Button';
-import { TDisabledBtn, TValue } from '../../types/types';
+import { TValue } from '../../types/types';
 
 type TSetValueProps = {
 	setValuesHandler: () => void;
+	values: TValue[];
 };
 
-export const SetValue = ({ setValuesHandler }: TSetValueProps) => {
+export const SetValue = ({ values, setValuesHandler }: TSetValueProps) => {
 	return (
 		<StyledSetValue>
-			<Button callback={setValuesHandler}>set</Button>
+			<Button error={values.find(item => item.error) ? true : false} callback={setValuesHandler}>
+				set
+			</Button>
 		</StyledSetValue>
 	);
 };

@@ -1,13 +1,21 @@
 import { styled } from 'styled-components';
 import { Field, StyledField } from '../field/Field';
-import { board } from '../../mock/data';
+import { TValue } from '../../types/types';
 
-type TValueFieldsProps = {};
+type TValueFieldsProps = {
+	values: TValue[];
+	onChangeValue: (id: string, value: string) => void;
+};
 
-export const ValueFields = ({}: TValueFieldsProps) => {
+export const ValueFields = ({ values, onChangeValue }: TValueFieldsProps) => {
 	return (
 		<StyledValueFields>
-			<Field />;
+			{values.map(item => {
+				const onChange = (value: string) => {
+					onChangeValue(item.id, value);
+				};
+				return <Field value={item.value} callback={onChange} error={item.error} label={item.title} key={item.id} />;
+			})}
 		</StyledValueFields>
 	);
 };

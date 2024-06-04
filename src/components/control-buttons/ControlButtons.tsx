@@ -3,13 +3,16 @@ import { Button } from '../button/Button';
 import { TDisabledBtn } from '../../types/types';
 import { inc, reset } from '../../mock/data';
 
-type TControlButtonsProps = {};
+type TControlButtonsProps = {
+	onChangeResetHandler: () => void;
+	onChangeIncHandler: () => void;
+};
 
-export const ControlButtons = ({}: TControlButtonsProps) => {
+export const ControlButtons = ({ onChangeResetHandler, onChangeIncHandler }: TControlButtonsProps) => {
 	return (
 		<StyledControlButtons>
-			<Button>inc</Button>
-			<Button>reset</Button>
+			<Button callback={onChangeIncHandler}>inc</Button>
+			<Button callback={onChangeResetHandler}>reset</Button>
 		</StyledControlButtons>
 	);
 };

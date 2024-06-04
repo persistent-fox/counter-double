@@ -2,12 +2,14 @@ import { styled } from 'styled-components';
 import { Button } from '../button/Button';
 import { TDisabledBtn, TValue } from '../../types/types';
 
-type TSetValueProps = {};
+type TSetValueProps = {
+	setValuesHandler: () => void;
+};
 
-export const SetValue = ({}: TSetValueProps) => {
+export const SetValue = ({ setValuesHandler }: TSetValueProps) => {
 	return (
 		<StyledSetValue>
-			<Button>set</Button>
+			<Button callback={setValuesHandler}>set</Button>
 		</StyledSetValue>
 	);
 };

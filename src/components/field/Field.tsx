@@ -1,19 +1,29 @@
 import { ChangeEvent } from 'react';
 import { css, styled } from 'styled-components';
-import { TValue } from '../../types/types';
 
-type TFieldProps = {};
+type TFieldProps = {
+	error: boolean;
+	value: string;
+	label: string;
+	callback: (value: string) => void;
+};
 
-export const Field = ({}: TFieldProps) => {
+export const Field = ({ label, value, error, callback }: TFieldProps) => {
+	const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+		callback(e.currentTarget.value);
+	};
+
 	return (
 		<StyledField>
-			<Label htmlFor=''>:</Label>
-			<Input type='number' />
+			<Label htmlFor=''>{label}:</Label>
+			<Input error={error ? 'error' : ''} value={value} onChange={onChange} type='number' />
 		</StyledField>
 	);
 };
 
-type TInputProps = {};
+type TInputProps = {
+	error: string;
+};
 
 export const StyledField = styled.div`
 	display: flex;
@@ -38,4 +48,10 @@ const Input = styled.input<TInputProps>`
 	color: ${props => props.theme.colors.primary};
 	font-weight: 900;
 	text-align: center;
+	${props =>
+		props.error === 'error' &&
+		css`
+			background-color: ${props => props.theme.colors.tertiary};
+			border: 3px solid ${props => props.theme.colors.error};
+		`}
 `;

@@ -1,7 +1,7 @@
-export const start = '111';
-export const max = '222';
-export const board = '333';
+export const start = 'startValue';
+export const max = 'maxValue';
+export const board = 'board';
 
-export const set = '444';
-export const reset = '555';
-export const inc = '666';
+export const set = 'setBtn';
+export const reset = 'resetBtn';
+export const inc = 'incBtn';

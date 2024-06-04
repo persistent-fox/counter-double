@@ -7,6 +7,12 @@ export type TValue = {
 	error: boolean;
 };
 
+export type TBoard = {
+	id: string;
+	value: string;
+	error: boolean;
+};
+
 export type TDisabledBtn = {
 	id: string;
 	disabled: boolean;

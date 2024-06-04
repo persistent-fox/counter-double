@@ -1,10 +1,16 @@
 import React from 'react';
 import { styled } from 'styled-components';
 
-type TButtonProps = {};
+type TButtonProps = {
+	children: React.ReactNode;
+	callback: () => void;
+};
 
-export const Button = ({}: TButtonProps) => {
-	return <StyledButton></StyledButton>;
+export const Button = ({ callback, children }: TButtonProps) => {
+	const onClick = () => {
+		callback();
+	};
+	return <StyledButton onClick={onClick}>{children}</StyledButton>;
 };
 
 export const StyledButton = styled.button`

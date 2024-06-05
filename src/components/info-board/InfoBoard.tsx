@@ -6,6 +6,6 @@ type TInfoBoardProps = {
 };
 
 export const InfoBoard = ({ values }: TInfoBoardProps) => {
-	const boardValueError = +values.boardValue === +values.startValue;
+	const boardValueError = +values.boardValue === +values.maxValue;
 	return <S.InfoBoard error={boardValueError ? 'error' : ''}>{values.boardValue}</S.InfoBoard>;
 };

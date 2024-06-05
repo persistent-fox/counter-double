@@ -17,12 +17,9 @@ export const Counter = () => {
 	});
 
 	const onToggle = () => {
-		setIsShownSettings(true);
+		setValues({ ...values, boardValue: values.startValue });
+		setIsShownSettings(prevState => !prevState);
 	};
-
-	const onChangeIncHandler = () => {};
-
-	const onChangeResetHandler = () => {};
 
 	useEffect(() => {
 		const storageValues = localStorage.getItem('values');
@@ -43,7 +40,7 @@ export const Counter = () => {
 				) : (
 					<>
 						<InfoBoard values={values} />
-						<ControlButtons setValues={setValues} values={values} />
+						<ControlButtons onToggle={onToggle} setValues={setValues} values={values} />
 					</>
 				)}
 			</FlexWrapper>

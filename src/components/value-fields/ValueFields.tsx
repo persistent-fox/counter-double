@@ -9,11 +9,11 @@ type TValueFieldsProps = {
 
 export const ValueFields = ({ values, setValues }: TValueFieldsProps) => {
 	const onChangeStartValue = (value: string) => {
-		setValues({ ...values, startValue: value });
+		setValues({ ...values, startValue: value, boardValue: value });
 	};
 
 	const onChangeMaxValue = (value: string) => {
-		setValues({ ...values, maxValue: value });
+		setValues({ ...values, maxValue: value, boardValue: values.startValue });
 	};
 	const startValueError = +values.startValue >= +values.maxValue || +values.startValue < 0;
 	const maxValueError = +values.startValue >= +values.maxValue || +values.maxValue < 0;

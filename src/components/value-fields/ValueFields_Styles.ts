@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import { StyledField } from '../field/Field';
+import { StyledField } from '../field/Field_Styles';
 
 const ValueFields = styled.div`
 	width: 100%;

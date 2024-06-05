@@ -1,23 +1,36 @@
 import { styled } from 'styled-components';
 import { Button } from '../button/Button';
-import { TControlButtons, TValues } from '../../types/types';
+import { TValues } from '../../types/types';
 import { FC } from 'react';
 
 type TControlButtonsProps = {
 	values: TValues;
 	setValues: (values: TValues) => void;
+	onToggle: () => void;
 };
 
-export const ControlButtons: FC<TControlButtonsProps> = ({ values, setValues }) => {
+export const ControlButtons: FC<TControlButtonsProps> = ({ values, setValues, onToggle }) => {
+	const onChangeIncHandler = () => {
+		const newValue = (+values.boardValue + 1).toString();
+		setValues({ ...values, boardValue: +newValue <= +values.maxValue ? newValue : values.boardValue });
+	};
+
+	const onChangeResetHandler = () => {
+		setValues({ ...values, boardValue: values.startValue });
+	};
+
+	const incBtnError = +values.boardValue === +values.maxValue;
+	const resetBtnError = +values.boardValue === +values.startValue;
+
 	return (
 		<StyledControlButtons>
-			<Button error={false} callback={() => {}}>
+			<Button error={incBtnError} callback={onChangeIncHandler}>
 				inc
 			</Button>
-			<Button error={false} callback={() => {}}>
+			<Button error={resetBtnError} callback={onChangeResetHandler}>
 				reset
 			</Button>
-			<Button error={false} callback={() => {}}>
+			<Button error={false} callback={onToggle}>
 				set
 			</Button>
 		</StyledControlButtons>

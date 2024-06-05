@@ -1,39 +1,20 @@
 import { FlexWrapper } from '../FlexWrapper';
-import { ValueFields } from '../value-fields/ValueFields';
 import { InfoBoard } from '../info-board/InfoBoard';
 import { ControlButtons } from '../control-buttons/ControlButtons';
-import { styled } from 'styled-components';
-import { useEffect, useMemo, useState } from 'react';
-import { max, start, board, set, reset, inc } from '../../mock/data';
-import { TBoard, TValue } from '../../types/types';
+import { useEffect, useState } from 'react';
 import { SetValue } from '../set-value/SetValue';
-import { Field } from '../field/Field';
+import { ValueFields } from '../value-fields/ValueFields';
+import { TValues } from '../../types/types';
+import { StyledCounter } from './Counter_Styles';
 
 export const Counter = () => {
 	const [isShownSettings, setIsShownSettings] = useState(false);
-	const [controlButtons, setControlButtons] = useState([
-		{
-			id: set,
-			disabled: false,
-		},
-		{
-			id: reset,
-			disabled: false,
-		},
-		{
-			id: inc,
-			disabled: false,
-		},
-	]);
 
-	const [values, setValues] = useState({
+	const [values, setValues] = useState<TValues>({
 		startValue: '0',
 		maxValue: '0',
 		boardValue: 'enter values and press "set"',
 	});
-	const startValueError = +values.startValue >= +values.maxValue || +values.startValue < 0;
-	const maxValueError = +values.startValue >= +values.maxValue || +values.maxValue < 0;
-	const boardValueError = +values.boardValue === +values.startValue;
 
 	const onToggle = () => {
 		setIsShownSettings(true);
@@ -43,43 +24,29 @@ export const Counter = () => {
 
 	const onChangeResetHandler = () => {};
 
-	const setValuesHandler = () => {};
-
 	useEffect(() => {
 		const storageValues = localStorage.getItem('values');
-		const storageBoard = localStorage.getItem('board');
+		if (storageValues) {
+			setValues(JSON.parse(storageValues));
+		}
 	}, []);
 
 	return (
 		<StyledCounter>
 			<FlexWrapper gap='20px' direction='column'>
-				{isShownSettings ? (
+				{!isShownSettings ? (
 					<>
-						{/* <ValueFields values={values} onChangeValue={onChangeValue} /> */}
-						<Field value={item.value} callback={onChange} error={startValueError} label={'start value'} />
-						<Field value={item.value} callback={onChange} error={item.error} label={'max value'} />
-						<SetValue values={values} setValuesHandler={setValuesHandler} />
+						<ValueFields setValues={setValues} values={values} />
+
+						<SetValue onToggle={onToggle} values={values} />
 					</>
 				) : (
 					<>
-						<InfoBoard boardValue={boardValue} />
-						<ControlButtons
-							onChangeIncHandler={onChangeIncHandler}
-							onChangeResetHandler={onChangeResetHandler}
-							onToggle={onToggle}
-						/>
+						<InfoBoard values={values} />
+						<ControlButtons setValues={setValues} values={values} />
 					</>
 				)}
 			</FlexWrapper>
 		</StyledCounter>
 	);
 };
-
-const StyledCounter = styled.div`
-	display: flex;
-	justify-content: space-between;
-	max-width: 800px;
-	width: 100%;
-	margin: 0 auto;
-	padding: 10px;
-`;

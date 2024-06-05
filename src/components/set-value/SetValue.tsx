@@ -1,28 +1,25 @@
-import { styled } from 'styled-components';
 import { Button } from '../button/Button';
-import { TValue } from '../../types/types';
+import { TValues } from '../../types/types';
+import { S } from './SetValue_Styles';
 
 type TSetValueProps = {
-	setValuesHandler: () => void;
-	values: TValue[];
+	values: TValues;
+	onToggle: () => void;
 };
 
-export const SetValue = ({ values, setValuesHandler }: TSetValueProps) => {
+export const SetValue = ({ values, onToggle }: TSetValueProps) => {
+	const setValueError = +values.startValue >= +values.maxValue || +values.maxValue < 0 || +values.startValue < 0;
+
+	const setValuesHandler = () => {
+		localStorage.setItem('values', JSON.stringify(values));
+		onToggle();
+	};
+
 	return (
-		<StyledSetValue>
-			<Button error={values.find(item => item.error) ? true : false} callback={setValuesHandler}>
+		<S.SetValue>
+			<Button error={setValueError} callback={setValuesHandler}>
 				set
 			</Button>
-		</StyledSetValue>
+		</S.SetValue>
 	);
 };
-
-const StyledSetValue = styled.div`
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: 100%;
-	padding: 10px 30px;
-	border-radius: 10px;
-	border: 3px solid ${props => props.theme.colors.accent};
-`;

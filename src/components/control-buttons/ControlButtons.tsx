@@ -1,18 +1,25 @@
 import { styled } from 'styled-components';
 import { Button } from '../button/Button';
+import { TControlButtons, TValues } from '../../types/types';
+import { FC } from 'react';
 
 type TControlButtonsProps = {
-	onChangeResetHandler: () => void;
-	onChangeIncHandler: () => void;
-	onToggle: () => void;
+	values: TValues;
+	setValues: (values: TValues) => void;
 };
 
-export const ControlButtons = ({ onChangeResetHandler, onChangeIncHandler, onToggle }: TControlButtonsProps) => {
+export const ControlButtons: FC<TControlButtonsProps> = ({ values, setValues }) => {
 	return (
 		<StyledControlButtons>
-			<Button callback={onChangeIncHandler}>inc</Button>
-			<Button callback={onChangeResetHandler}>reset</Button>
-			<Button callback={onToggle}>set</Button>
+			<Button error={false} callback={() => {}}>
+				inc
+			</Button>
+			<Button error={false} callback={() => {}}>
+				reset
+			</Button>
+			<Button error={false} callback={() => {}}>
+				set
+			</Button>
 		</StyledControlButtons>
 	);
 };

@@ -1,31 +1,27 @@
-import { styled } from 'styled-components';
-import { Field, StyledField } from '../field/Field';
-import { TValue } from '../../types/types';
+import { Field } from '../field/Field';
+import { TValues } from '../../types/types';
+import { S } from './ValueFields_Styles';
 
 type TValueFieldsProps = {
-	values: TValue[];
-	onChangeValue: (id: string, value: string) => void;
+	values: TValues;
+	setValues: (values: TValues) => void;
 };
 
-export const ValueFields = ({ values, onChangeValue }: TValueFieldsProps) => {
+export const ValueFields = ({ values, setValues }: TValueFieldsProps) => {
+	const onChangeStartValue = (value: string) => {
+		setValues({ ...values, startValue: value });
+	};
+
+	const onChangeMaxValue = (value: string) => {
+		setValues({ ...values, maxValue: value });
+	};
+	const startValueError = +values.startValue >= +values.maxValue || +values.startValue < 0;
+	const maxValueError = +values.startValue >= +values.maxValue || +values.maxValue < 0;
+
 	return (
-		<StyledValueFields>
-			{values.map(item => {
-				const onChange = (value: string) => {
-					onChangeValue(item.id, value);
-				};
-				return <Field value={item.value} callback={onChange} error={item.error} label={item.title} key={item.id} />;
-			})}
-		</StyledValueFields>
+		<S.ValueFields>
+			<Field value={values.startValue} callback={onChangeStartValue} error={startValueError} label={'start value'} />
+			<Field value={values.maxValue} callback={onChangeMaxValue} error={maxValueError} label={'max value'} />
+		</S.ValueFields>
 	);
 };
-
-const StyledValueFields = styled.div`
-	width: 100%;
-	padding: 10px;
-	border-radius: 10px;
-	border: 3px solid ${props => props.theme.colors.accent};
-	${StyledField}:first-child {
-		margin-bottom: 20px;
-	}
-`;

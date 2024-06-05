@@ -18,7 +18,7 @@ export const Button = ({ error, callback, children }: TButtonProps) => {
 	);
 };
 
-export const StyledButton = styled.button<TStyledButtonProps>`
+export const StyledButton = styled.button`
 	font-size: 30px;
 	padding: 10px 20px;
 	border-radius: 10px;

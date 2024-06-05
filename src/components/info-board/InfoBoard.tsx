@@ -1,35 +1,11 @@
-import styled, { css } from 'styled-components';
-import { TBoard } from '../../types/types';
+import { TValues } from '../../types/types';
+import { S } from './InfoBoard_Styles';
 
 type TInfoBoardProps = {
-	boardValue: TBoard;
+	values: TValues;
 };
 
-export const InfoBoard = ({ boardValue }: TInfoBoardProps) => {
-	return <StyledInfoBoard error={boardValue.error ? 'error' : ''}>{boardValue.value}</StyledInfoBoard>;
+export const InfoBoard = ({ values }: TInfoBoardProps) => {
+	const boardValueError = +values.boardValue === +values.startValue;
+	return <S.InfoBoard error={boardValueError ? 'error' : ''}>{values.boardValue}</S.InfoBoard>;
 };
-
-type TStyledInfoBoardProps = {
-	error: string;
-};
-
-const StyledInfoBoard = styled.span<TStyledInfoBoardProps>`
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	padding: 10px;
-	padding: 10px 15px;
-	border-radius: 5px;
-	min-height: 134px;
-	font-size: 30px;
-	font-weight: 900;
-	text-align: center;
-	background-color: transparent;
-	border: 3px solid ${props => props.theme.colors.accent};
-	color: ${props => props.theme.colors.accent};
-	${props =>
-		props.error === 'error' &&
-		css`
-			color: ${props => props.theme.colors.error};
-		`}
-`;

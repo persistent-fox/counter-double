@@ -3,7 +3,7 @@ import { StyledField } from '../field/Field_Styles';
 
 export const Counter = styled.div`
 	display: flex;
-	justify-content: space-between;
+	justify-content: center;
 	max-width: 800px;
 	width: 100%;
 	margin: 0 auto;

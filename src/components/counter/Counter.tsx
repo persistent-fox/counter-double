@@ -93,12 +93,13 @@ export const Counter = () => {
 							<Field error={maxError} value={maxValue} callback={onChangeMaxValue} label={'max value'} />
 						</S.ValueFields>
 
-						<SetValue setValuesHandler={setValuesHandler} />
+						<SetValue maxError={maxError} startError={startError} setValuesHandler={setValuesHandler} />
 					</>
 				) : (
 					<>
 						<InfoBoard error={boardError} value={boardValue} />
 						<ControlButtons
+							error={boardError}
 							onChangeResetHandler={onChangeResetHandler}
 							onChangeIncHandler={onChangeIncHandler}
 							onToggle={onToggle}

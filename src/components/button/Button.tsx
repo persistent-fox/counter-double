@@ -4,7 +4,7 @@ import { styled } from 'styled-components';
 type TButtonProps = {
 	children: React.ReactNode;
 	callback: () => void;
-	error: boolean;
+	error?: boolean;
 };
 
 export const Button = ({ error, callback, children }: TButtonProps) => {

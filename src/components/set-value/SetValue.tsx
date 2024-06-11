@@ -1,15 +1,16 @@
 import { Button } from '../button/Button';
-import { TValues } from '../../types/types';
 import { S } from './SetValue_Styles';
 
 type TSetValueProps = {
 	setValuesHandler: () => void;
+	maxError: boolean;
+	startError: boolean;
 };
 
-export const SetValue = ({ setValuesHandler }: TSetValueProps) => {
+export const SetValue = ({ setValuesHandler, startError, maxError }: TSetValueProps) => {
 	return (
 		<S.SetValue>
-			<Button error={false} callback={setValuesHandler}>
+			<Button error={maxError || startError} callback={setValuesHandler}>
 				set
 			</Button>
 		</S.SetValue>

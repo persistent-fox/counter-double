@@ -6,20 +6,22 @@ type TControlButtonsProps = {
 	onToggle: () => void;
 	onChangeResetHandler: () => void;
 	onChangeIncHandler: () => void;
+	error: boolean;
 };
 
-export const ControlButtons: FC<TControlButtonsProps> = ({ onToggle, onChangeIncHandler, onChangeResetHandler }) => {
+export const ControlButtons: FC<TControlButtonsProps> = ({
+	error,
+	onToggle,
+	onChangeIncHandler,
+	onChangeResetHandler,
+}) => {
 	return (
 		<StyledControlButtons>
-			<Button error={false} callback={onChangeIncHandler}>
+			<Button error={error} callback={onChangeIncHandler}>
 				inc
 			</Button>
-			<Button error={false} callback={onChangeResetHandler}>
-				reset
-			</Button>
-			<Button error={false} callback={onToggle}>
-				set
-			</Button>
+			<Button callback={onChangeResetHandler}>reset</Button>
+			<Button callback={onToggle}>set</Button>
 		</StyledControlButtons>
 	);
 };

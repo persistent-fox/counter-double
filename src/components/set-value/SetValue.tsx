@@ -3,21 +3,13 @@ import { TValues } from '../../types/types';
 import { S } from './SetValue_Styles';
 
 type TSetValueProps = {
-	values: TValues;
-	onToggle: () => void;
+	setValuesHandler: () => void;
 };
 
-export const SetValue = ({ values, onToggle }: TSetValueProps) => {
-	const setValueError = +values.startValue >= +values.maxValue || +values.maxValue < 0 || +values.startValue < 0;
-
-	const setValuesHandler = () => {
-		localStorage.setItem('values', JSON.stringify(values));
-		onToggle();
-	};
-
+export const SetValue = ({ setValuesHandler }: TSetValueProps) => {
 	return (
 		<S.SetValue>
-			<Button error={setValueError} callback={setValuesHandler}>
+			<Button error={false} callback={setValuesHandler}>
 				set
 			</Button>
 		</S.SetValue>

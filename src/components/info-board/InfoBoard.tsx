@@ -1,7 +1,7 @@
 import { S } from './InfoBoard_Styles';
 
 type TInfoBoardProps = {
-	value: string;
+	value: number;
 	error: boolean;
 };
 

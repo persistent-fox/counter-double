@@ -3,14 +3,14 @@ import { Input, Label, StyledField } from './Field_Styles';
 
 type TFieldProps = {
 	error: boolean;
-	value: string;
+	value: number;
 	label: string;
-	callback: (value: string) => void;
+	callback: (value: number) => void;
 };
 
 export const Field = ({ label, value, error, callback }: TFieldProps) => {
 	const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-		callback(e.currentTarget.value);
+		callback(+e.currentTarget.value);
 	};
 
 	return (

@@ -5,70 +5,48 @@ import { useEffect, useState } from 'react';
 import { SetValue } from '../set-value/SetValue';
 import { S } from './Counter_Styles';
 import { Field } from '../field/Field';
+import { useDispatch } from 'react-redux';
+import { changeBoardValueAC, changeMaxValueAC, changeStartValueAC } from '../../state/reducers/counterReducer';
+import { useSelector } from 'react-redux';
+import { TRootReducer } from '../../state/store';
 
 export const Counter = () => {
+	const dispatch = useDispatch();
+	const boardValue = useSelector<TRootReducer, number>(state => state.counter.boardValue);
+	const startValue = useSelector<TRootReducer, number>(state => state.counter.startValue);
+	const maxValue = useSelector<TRootReducer, number>(state => state.counter.maxValue);
 	const [isShownSettings, setIsShownSettings] = useState(false);
-	const [maxValue, setMaxValue] = useState('0');
-	const [startValue, setStartValue] = useState('0');
-	const [boardValue, setBoardValue] = useState('enter values and press "set"');
-	const [maxError, setMaxError] = useState(false);
-	const [startError, setStartError] = useState(false);
-	const [boardError, setBoardError] = useState(false);
+
+	const maxError = maxValue < startValue || maxValue < 0 || startValue === maxValue;
+	const startError = maxValue < startValue || startValue < 0 || startValue === maxValue;
+	const boardError = maxError || startError || boardValue === maxValue;
 
 	const onToggle = () => {
-		setBoardValue(startValue);
+		dispatch(changeBoardValueAC(startValue));
 		setIsShownSettings(prevState => !prevState);
 	};
 
-	const onChangeStartValue = (value: string) => {
-		switch (true) {
-			case +value < 0 || +value > +maxValue:
-				setStartError(true);
-				break;
-			case +value === +maxValue:
-				setStartError(true);
-				setMaxError(true);
-				break;
-			case +value < +maxValue && +maxValue > 0 && +value > 0:
-				setStartError(false);
-				setMaxError(false);
-				break;
-		}
-		setStartValue(value);
+	const onChangeStartValue = (value: number) => {
+		dispatch(changeStartValueAC(value));
 	};
 
-	const onChangeMaxValue = (value: string) => {
-		switch (true) {
-			case +value < 0 || +value < +startValue:
-				setMaxError(true);
-				break;
-			case +value === +startValue:
-				setStartError(true);
-				setMaxError(true);
-				break;
-			case +value > +startValue && +startValue > 0 && +value > 0:
-				setStartError(false);
-				setMaxError(false);
-				break;
-		}
-		setMaxValue(value);
+	const onChangeMaxValue = (value: number) => {
+		dispatch(changeMaxValueAC(value));
 	};
 
 	const onChangeIncHandler = () => {
-		if (+boardValue === +maxValue) return;
-		+boardValue + 1 === +maxValue ? setBoardError(true) : setBoardError(false);
-		setBoardValue(prevState => (+prevState + 1).toString());
+		if (boardValue === maxValue) return;
+		dispatch(changeBoardValueAC(boardValue + 1));
 	};
 
 	const onChangeResetHandler = () => {
-		setBoardValue(startValue);
-		setBoardError(false);
+		dispatch(changeBoardValueAC(startValue));
 	};
 
 	const setValuesHandler = () => {
-		localStorage.setItem('maxValue', maxValue);
-		localStorage.setItem('startValue', startValue);
-		localStorage.setItem('boardValue', startValue);
+		localStorage.setItem('maxValue', maxValue.toString());
+		localStorage.setItem('startValue', startValue.toString());
+		localStorage.setItem('boardValue', startValue.toString());
 		onToggle();
 	};
 
@@ -77,9 +55,9 @@ export const Counter = () => {
 		const storageStartValue = localStorage.getItem('startValue');
 		const storageBoardValue = localStorage.getItem('boardValue');
 		if (storageMaxValue && storageStartValue && storageBoardValue) {
-			setMaxValue(storageMaxValue);
-			setStartValue(storageStartValue);
-			setBoardValue(storageBoardValue);
+			dispatch(changeMaxValueAC(+storageMaxValue));
+			dispatch(changeStartValueAC(+storageStartValue));
+			dispatch(changeBoardValueAC(+storageBoardValue));
 		}
 	}, []);
 
